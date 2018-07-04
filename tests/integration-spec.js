@@ -1,4 +1,6 @@
 describe('Integration test', () => {
+    const EC = protractor.ExpectedConditions
+
     const logo = element(By.className('page-header__logo-responsive'))
     const carInsuranceButton = element(By.xpath('//span[text()= "Car Insurance"]'))
     const getNewQuoteButton = element(
@@ -14,22 +16,26 @@ describe('Integration test', () => {
     )
     const continueButton = element(By.className('btn btn-primary btn-continue btn-continue--alone'))
 
+    const isClickableCarInsuranceButton = EC.elementToBeClickable(carInsuranceButton)
+    const isClickableGetNewQuoteButton = EC.elementToBeClickable(getNewQuoteButton)
+
     it('Integration test', () => {
         browser
             .get('https://www.moneysupermarket.com/')
             .then(checkIsElementOnPage(logo))
-            .then(checkIsElementOnPage(carInsuranceButton))
+            .then(() => browser.wait(isClickableCarInsuranceButton, 2000))
             .then(() => carInsuranceButton.click())
-            .then(checkUrl('car-insurance'))
+            //.then(() => browser.wait(EC.urlContains('car-insurance'), 1000))
+            .then(() => checkUrl('car-insurance'))
             .then(() => {
                 return browser.getCurrentUrl().then(currentUrl => {
                     if (!currentUrl.includes('questionset')) {
-                        expect(getNewQuoteButton.isPresent()).toBe(true)
+                        //expect(getNewQuoteButton.isPresent()).toBe(true)
+                        browser.wait(isClickableGetNewQuoteButton, 1000)
                         return getNewQuoteButton.click()
                     }
                 })
             })
-            .then(wait(3000))
             .then(() => {
                 fillField(carRegictrationYear, '1753')
                 expect(element(carRegictrationYear).getAttribute('value')).toEqual('1753')
@@ -58,7 +64,6 @@ describe('Integration test', () => {
             .then(() => {
                 expect(continueButton.getText()).toBe('CONTINUE TO STEP 2')
             })
-            .then(wait(2000))
             .then(() => browser.quit())
             .catch(error => {
                 browser.quit()
@@ -79,5 +84,5 @@ function checkUrl(string) {
 }
 
 function checkIsElementOnPage(elem) {
-    return () => expect(elem.isPresent()).toBe(true)
+    return () => expect(elem.isPresent()).toBeTruthy()
 }

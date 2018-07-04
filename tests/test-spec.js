@@ -5,12 +5,12 @@ describe('Home page', () => {
 
     it('Logo is on the page', () => {
         const logo = element(By.className('page-header__logo-responsive'))
-        expect(logo.isPresent()).toBe(true)
+        expect(logo.isPresent()).toBeTruthy()
     })
 
     it('checkButton', () => {
         const carInsuranceButton = element(By.xpath('//span[text()="Car Insurance"]'))
-        expect(carInsuranceButton.isPresent()).toBe(true)
+        expect(carInsuranceButton.isPresent()).toBeTruthy()
         carInsuranceButton.click()
         expect(browser.getCurrentUrl()).toContain('car-insurance')
     })
