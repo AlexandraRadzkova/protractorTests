@@ -3,20 +3,40 @@ describe('Home page', () => {
         browser.get('https://www.moneysupermarket.com/')
     })
 
-    it('Logo is on the page', () => {
+    xit('Logo is on the page', () => {
         const logo = element(By.className('page-header__logo-responsive'))
         expect(logo.isPresent()).toBeTruthy()
     })
 
-    it('checkButton', () => {
+    xit('checkButton', () => {
         const carInsuranceButton = element(By.xpath('//span[text()="Car Insurance"]'))
         expect(carInsuranceButton.isPresent()).toBeTruthy()
         carInsuranceButton.click()
         expect(browser.getCurrentUrl()).toContain('car-insurance')
     })
+
+    it('try to click solar power in energy', () => {
+        const energy = element(By.css('.top-navigation-container>li:nth-child(3)'))
+
+        const solarPowerLink = element(By.xpath("//a[contains(text(),'Solar Power')]"))
+        function wait(timeout) {
+            return browser.wait(() => false, timeout).catch(() => {})
+        }
+
+        browser
+            .actions()
+            .mouseMove(energy)
+            .mouseMove(solarPowerLink)
+            .click()
+            .perform()
+            .then(() => {
+                wait(3000)
+            })
+        expect(browser.getCurrentUrl()).toContain('solar-power')
+    })
 })
 
-describe('Form page', () => {
+xdescribe('Form page', () => {
     beforeEach(() => {
         browser.get(
             'https://www.moneysupermarket.com/shop/car-insurance/questionset/501-2/#?step=highimpactquestions',
