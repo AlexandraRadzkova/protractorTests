@@ -3,12 +3,12 @@ describe('Home page', () => {
         browser.get('https://www.moneysupermarket.com/')
     })
 
-    xit('Logo is on the page', () => {
+    it('Logo is on the page', () => {
         const logo = element(By.className('page-header__logo-responsive'))
         expect(logo.isPresent()).toBeTruthy()
     })
 
-    xit('checkButton', () => {
+    it('checkButton', () => {
         const carInsuranceButton = element(By.xpath('//span[text()="Car Insurance"]'))
         expect(carInsuranceButton.isPresent()).toBeTruthy()
         carInsuranceButton.click()
@@ -21,7 +21,7 @@ describe('Home page', () => {
         const solarPowerLink = element(By.xpath("//a[contains(text(),'Solar Power')]"))
         function wait(timeout) {
             return browser.wait(() => false, timeout).catch(() => {})
-        }
+        }     
 
         browser
             .actions()
@@ -30,7 +30,7 @@ describe('Home page', () => {
             .click()
             .perform()
             .then(() => {
-                wait(3000)
+                wait(4000)
             })
         expect(browser.getCurrentUrl()).toContain('solar-power')
     })
