@@ -36,10 +36,11 @@ describe('Home page', () => {
     })
 })
 
-xdescribe('Form page', () => {
+describe('Form page', () => {
+    browser.waitForAngularEnabled(false);
     beforeEach(() => {
         browser.get(
-            'https://www.moneysupermarket.com/shop/car-insurance/questionset/501-2/#?step=highimpactquestions',
+            'https://www.moneysupermarket.com/shop/car-insurance/questionset/your-car#?new-journey',
         )
     })
 
@@ -51,7 +52,7 @@ xdescribe('Form page', () => {
         return browser.wait(() => false, timeout).catch(() => {})
     }
 
-    it('Fill form', () => {
+    xit('Fill form', () => {
         const dateField = By.name('policyHolder.dateOfBirth.day')
         const monthField = By.name('policyHolder.dateOfBirth.month')
         const yearField = By.name('policyHolder.dateOfBirth.year')
@@ -79,8 +80,8 @@ xdescribe('Form page', () => {
 
     it('Check Continue to step 2 button text', () => {
         const continueButton = element(
-            By.className('btn btn-primary btn-continue btn-continue--alone'),
+            By.css('.btn__subprimary'),
         )
-        expect(continueButton.getText()).toBe('CONTINUE TO STEP 2')
+        expect(continueButton.getText()).toBe('Continue to next page')
     })
 })
